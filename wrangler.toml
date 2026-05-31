@@ -1,0 +1,23 @@
+name = "comenta-ai"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
+
+# Run: wrangler d1 create comenta-ai-db
+# Then replace the database_id below with the real one
+[[d1_databases]]
+binding = "DB"
+database_name = "comenta-ai-db"
+database_id = "REPLACE_WITH_REAL_D1_ID"
+
+# Run: wrangler kv namespace create SESSIONS
+[[kv_namespaces]]
+binding = "SESSIONS"
+id = "REPLACE_WITH_REAL_KV_ID"
+
+[vars]
+NODE_ENV = "production"
+
+# Secrets (set via: wrangler secret put ANTHROPIC_API_KEY)
+# ANTHROPIC_API_KEY
+# JWT_SECRET
