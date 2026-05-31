@@ -1,0 +1,39 @@
+{
+  "name": "comenta-ai",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler pages dev --compatibility-date=2024-09-23 --compatibility-flags=nodejs_compat -- next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "pages:build": "npx @cloudflare/next-on-pages",
+    "preview": "npm run pages:build && wrangler pages dev",
+    "deploy": "npm run pages:build && wrangler pages deploy",
+    "db:create": "wrangler d1 create comenta-ai-db",
+    "db:migrate": "wrangler d1 execute comenta-ai-db --file=./migrations/0001_initial.sql",
+    "db:migrate:local": "wrangler d1 execute comenta-ai-db --local --file=./migrations/0001_initial.sql"
+  },
+  "dependencies": {
+    "next": "15.1.0",
+    "react": "^19",
+    "react-dom": "^19",
+    "@anthropic-ai/sdk": "^0.32.0",
+    "@cloudflare/next-on-pages": "^1.13.5",
+    "jose": "^5.9.6",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.5.4",
+    "lucide-react": "^0.469.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241205.0",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "^10.0.1",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5",
+    "wrangler": "^3.99.0"
+  }
+}
