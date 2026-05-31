@@ -1,19 +1,19 @@
 /**
  * Comenta.AI Widget v1.0
  * Embed AI-moderated comments on any website
- * Usage: <script src="https://cdn.comenta.ai/widget.js" data-site-id="..." data-api-key="..."></script>
+ * Usage: <script src="/widget.js" data-site-id="..."></script>
+ * Authentication is done via Origin header validation (no API key needed).
  */
 (function () {
   "use strict";
 
   const script = document.currentScript;
   const SITE_ID = script?.getAttribute("data-site-id");
-  const API_KEY = script?.getAttribute("data-api-key");
-  const API_BASE = script?.getAttribute("data-api-base") || "https://comenta.ai";
+  const API_BASE = script?.getAttribute("data-api-base") || window.location.origin;
   const PAGE_URL = window.location.href;
 
-  if (!SITE_ID || !API_KEY) {
-    console.error("[Comenta.AI] data-site-id and data-api-key are required");
+  if (!SITE_ID) {
+    console.error("[Comenta.AI] data-site-id is required");
     return;
   }
 
@@ -55,7 +55,8 @@
   document.head.appendChild(style);
 
   function timeAgo(dateStr) {
-    const diff = Date.now() - new Date(dateStr).getTime();
+    const date = new Date(dateStr.includes("T") ? dateStr : dateStr.replace(" ", "T") + "Z");
+    const diff = Date.now() - date.getTime();
     const m = Math.floor(diff / 60000);
     if (m < 60) return `${m}min atrás`;
     const h = Math.floor(m / 60);
@@ -82,7 +83,7 @@
     }
     list.innerHTML = comments.map((c) => `
       <div class="cai-comment">
-        <div class="cai-avatar">${c.author_name[0].toUpperCase()}</div>
+        <div class="cai-avatar">${escHtml((c.author_name?.[0] || "?").toUpperCase())}</div>
         <div class="cai-comment-body">
           <span class="cai-author">${escHtml(c.author_name)}</span>
           <span class="cai-date">${timeAgo(c.created_at)}</span>
@@ -121,7 +122,7 @@
     try {
       const res = await fetch(API, {
         method: "POST",
-        headers: { "Content-Type": "application/json", "X-API-Key": API_KEY },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           page_url: PAGE_URL,
           author_name: document.getElementById("cai-name").value,

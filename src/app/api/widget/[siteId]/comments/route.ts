@@ -6,12 +6,24 @@ import type { Comment, Site } from "@/types";
 
 export const runtime = "edge";
 
-// CORS headers for cross-origin widget requests
 function cors(res: NextResponse): NextResponse {
   res.headers.set("Access-Control-Allow-Origin", "*");
   res.headers.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.headers.set("Access-Control-Allow-Headers", "Content-Type, X-API-Key");
+  res.headers.set("Access-Control-Allow-Headers", "Content-Type");
   return res;
+}
+
+// Validate that the request comes from the registered domain (or dev environment)
+function isOriginAllowed(req: Request, siteDomain: string): boolean {
+  const origin = req.headers.get("origin") ?? req.headers.get("referer");
+  if (!origin) return true; // Allow server-side / curl / dev requests
+  try {
+    const originHost = new URL(origin).hostname.replace(/^www\./, "");
+    const siteHost = siteDomain.toLowerCase().replace(/^www\./, "");
+    return originHost === siteHost || originHost.endsWith("." + siteHost) || originHost === "localhost";
+  } catch {
+    return false;
+  }
 }
 
 export async function OPTIONS() {
@@ -26,7 +38,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ siteId: 
   const site = await dbFirst<Site>("SELECT id FROM sites WHERE id = ?", [siteId]);
   if (!site) return cors(NextResponse.json({ error: "Site não encontrado" }, { status: 404 }));
 
-  let sql = "SELECT * FROM comments WHERE site_id = ? AND status = 'approved'";
+  let sql = "SELECT id, site_id, page_url, author_name, content, created_at FROM comments WHERE site_id = ? AND status = 'approved'";
   const args: string[] = [siteId];
 
   if (pageUrl) { sql += " AND page_url = ?"; args.push(pageUrl); }
@@ -39,24 +51,24 @@ export async function GET(req: Request, { params }: { params: Promise<{ siteId: 
 export async function POST(req: Request, { params }: { params: Promise<{ siteId: string }> }) {
   try {
     const { siteId } = await params;
-    const apiKey = req.headers.get("x-api-key");
 
-    // Validate site & API key
-    const site = await dbFirst<Site & { api_key: string }>(
-      `SELECT s.*, u.api_key
-       FROM sites s JOIN users u ON s.user_id = u.id
-       WHERE s.id = ?`,
+    const site = await dbFirst<Site>(
+      "SELECT id, domain, auto_approve_threshold, auto_reject_threshold FROM sites WHERE id = ?",
       [siteId]
     );
 
     if (!site) return cors(NextResponse.json({ error: "Site não encontrado" }, { status: 404 }));
-    if (site.api_key !== apiKey) return cors(NextResponse.json({ error: "API key inválida" }, { status: 401 }));
+
+    // Validate origin against the registered domain
+    if (!isOriginAllowed(req, site.domain)) {
+      return cors(NextResponse.json({ error: "Origem não autorizada para este site" }, { status: 403 }));
+    }
 
     const { page_url, author_name, author_email, content } = await req.json() as {
       page_url: string; author_name: string; author_email?: string; content: string;
     };
 
-    if (!page_url || !author_name || !content) {
+    if (!page_url || !author_name?.trim() || !content) {
       return cors(NextResponse.json({ error: "page_url, author_name e content são obrigatórios" }, { status: 400 }));
     }
     if (content.length < 3) {
@@ -66,10 +78,8 @@ export async function POST(req: Request, { params }: { params: Promise<{ siteId:
       return cors(NextResponse.json({ error: "Comentário muito longo (máx 2000 chars)" }, { status: 400 }));
     }
 
-    // AI moderation
     const aiResult = await moderateComment(content, page_url, site.domain);
 
-    // Determine status based on site thresholds
     let status: "approved" | "pending" | "rejected" | "spam";
     if (aiResult.label === "spam" || aiResult.label === "toxic") {
       status = aiResult.label === "spam" ? "spam" : "rejected";
@@ -85,7 +95,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ siteId:
     await dbRun(
       `INSERT INTO comments (id, site_id, page_url, author_name, author_email, content, status, ai_score, ai_label, ai_reason)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [id, siteId, page_url, author_name, author_email ?? null, content, status, aiResult.score, aiResult.label, aiResult.reason]
+      [id, siteId, page_url, author_name.trim(), author_email ?? null, content, status, aiResult.score, aiResult.label, aiResult.reason]
     );
 
     return cors(NextResponse.json({

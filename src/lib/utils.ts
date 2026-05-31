@@ -45,14 +45,19 @@ export async function verifyPassword(password: string, stored: string): Promise<
   return candidate === hashHex;
 }
 
+// SQLite returns "YYYY-MM-DD HH:MM:SS" — Safari requires ISO 8601 with T separator
+function parseDate(s: string): Date {
+  return new Date(s.includes("T") ? s : s.replace(" ", "T") + "Z");
+}
+
 export function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString("pt-BR", {
+  return parseDate(dateStr).toLocaleDateString("pt-BR", {
     day: "2-digit", month: "short", year: "numeric",
   });
 }
 
 export function formatRelative(dateStr: string): string {
-  const diff = Date.now() - new Date(dateStr).getTime();
+  const diff = Date.now() - parseDate(dateStr).getTime();
   const mins = Math.floor(diff / 60_000);
   if (mins < 60) return `${mins}m atrás`;
   const hours = Math.floor(mins / 60);

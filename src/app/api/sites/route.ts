@@ -34,16 +34,17 @@ export async function POST(req: Request) {
   }
 
   const id = nanoid();
+  const cleanedDomain = domain.toLowerCase().replace(/^https?:\/\//, "").replace(/\/$/, "");
   await dbRun(
     "INSERT INTO sites (id, user_id, name, domain) VALUES (?, ?, ?, ?)",
-    [id, userId, name.trim(), domain.toLowerCase().replace(/^https?:\/\//, "").replace(/\/$/, "")]
+    [id, userId, name.trim(), cleanedDomain]
   );
 
   const site: Site = {
     id,
     user_id: userId,
     name: name.trim(),
-    domain,
+    domain: cleanedDomain,
     auto_approve_threshold: 0.8,
     auto_reject_threshold: 0.3,
     created_at: new Date().toISOString(),

@@ -116,9 +116,8 @@ export default function SettingsPage() {
           {`<!-- Comenta.AI Widget -->
 <div id="comenta-ai"></div>
 <script
-  src="https://cdn.comenta.ai/widget.js"
-  data-site-id="SEU_SITE_ID"
-  data-api-key="${user.api_key}">
+  src="${typeof window !== "undefined" ? window.location.origin : "https://comenta.ai"}/widget.js"
+  data-site-id="SEU_SITE_ID">
 </script>`}
         </pre>
       </div>

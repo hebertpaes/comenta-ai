@@ -17,7 +17,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "A senha deve ter no mínimo 8 caracteres" }, { status: 400 });
     }
 
-    const existing = await dbFirst<User>("SELECT id FROM users WHERE email = ?", [email]);
+    const normalizedEmail = email.toLowerCase().trim();
+    const existing = await dbFirst<User>("SELECT id FROM users WHERE email = ?", [normalizedEmail]);
     if (existing) {
       return NextResponse.json({ error: "E-mail já cadastrado" }, { status: 409 });
     }
@@ -28,10 +29,10 @@ export async function POST(req: Request) {
 
     await dbRun(
       "INSERT INTO users (id, email, name, password_hash, api_key) VALUES (?, ?, ?, ?, ?)",
-      [id, email.toLowerCase().trim(), name.trim(), passwordHash, apiKey]
+      [id, normalizedEmail, name.trim(), passwordHash, apiKey]
     );
 
-    const token = await signToken({ sub: id, email, name });
+    const token = await signToken({ sub: id, email: normalizedEmail, name });
     const res = NextResponse.json({ ok: true });
     res.cookies.set("auth_token", token, {
       httpOnly: true,

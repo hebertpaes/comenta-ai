@@ -89,7 +89,7 @@ export default function CommentsPage() {
             <div key={c.id} className="card hover:border-white/20 transition-all">
               <div className="flex items-start gap-4">
                 <div className="w-9 h-9 rounded-full bg-brand-500/15 flex items-center justify-center text-sm font-bold text-brand-300 shrink-0">
-                  {c.author_name[0].toUpperCase()}
+                  {(c.author_name?.[0] || "?").toUpperCase()}
                 </div>
 
                 <div className="flex-1 min-w-0">

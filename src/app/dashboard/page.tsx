@@ -113,7 +113,7 @@ export default async function DashboardPage() {
             {recentComments.map((c) => (
               <div key={c.id} className="flex items-start gap-3 p-3 rounded-lg bg-white/5 border border-white/5 hover:border-white/10 transition-all">
                 <div className="w-8 h-8 rounded-full bg-brand-500/20 flex items-center justify-center text-xs font-medium text-brand-300 shrink-0">
-                  {c.author_name[0].toUpperCase()}
+                  {(c.author_name?.[0] || "?").toUpperCase()}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-0.5">
