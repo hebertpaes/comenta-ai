@@ -1,0 +1,67 @@
+{
+  "manifest_version": 3,
+  "name": "Comenta AI – Superpoderes para o WhatsApp",
+  "short_name": "Comenta AI",
+  "version": "1.0.0",
+  "description": "CRM Kanban, transmissão em massa, agendamentos, respostas rápidas, funis, chatbot, assistente de IA e modo privacidade no WhatsApp Web.",
+  "minimum_chrome_version": "111",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "Comenta AI",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png"
+    }
+  },
+  "options_page": "options/options.html",
+  "background": {
+    "service_worker": "src/background/sw.js"
+  },
+  "permissions": ["storage", "unlimitedStorage", "notifications"],
+  "host_permissions": ["https://web.whatsapp.com/*", "https://api.anthropic.com/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://web.whatsapp.com/*"],
+      "js": ["src/page/pre.js", "vendor/wppconnect-wa.js", "src/page/bridge.js"],
+      "world": "MAIN",
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://web.whatsapp.com/*"],
+      "css": ["src/content/page.css"],
+      "js": [
+        "src/content/core.js",
+        "src/content/ui.js",
+        "src/content/features/dashboard.js",
+        "src/content/features/funnels.js",
+        "src/content/features/kanban.js",
+        "src/content/features/broadcast.js",
+        "src/content/features/schedule.js",
+        "src/content/features/quickreplies.js",
+        "src/content/features/chatbot.js",
+        "src/content/features/ai.js",
+        "src/content/features/reminders.js",
+        "src/content/features/tabs.js",
+        "src/content/features/groups.js",
+        "src/content/features/privacy.js",
+        "src/content/features/notes.js",
+        "src/content/features/settings.js",
+        "src/content/main.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["src/content/ui.css", "icons/*"],
+      "matches": ["https://web.whatsapp.com/*"]
+    }
+  ]
+}
