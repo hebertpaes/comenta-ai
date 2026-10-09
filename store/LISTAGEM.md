@@ -10,9 +10,9 @@ Copie e cole no painel do desenvolvedor (<https://chrome.google.com/webstore/dev
 | **Resumo / descrição curta** (≤ 132) | `CRM Kanban, transmissão em massa, agendamentos, respostas rápidas, funis, chatbot, IA e modo privacidade no WhatsApp Web.` |
 | **Categoria** | Produtividade → Comunicação |
 | **Idioma** | Português (Brasil) |
-| **Site oficial** | `https://github.com/hebertpaes/comenta-ai` (ou a página do GitHub Pages) |
+| **Site oficial** | `https://comenta.com.br` (após o deploy em `deploy/README.md`; alternativa: `https://github.com/hebertpaes/comenta-ai`) |
 | **URL de suporte** | `https://github.com/hebertpaes/comenta-ai/issues` |
-| **Política de privacidade** | URL pública de `docs/PRIVACIDADE.md` (ver `PUBLICACAO.md`) |
+| **Política de privacidade** | `https://comenta.com.br/privacidade.html` (gerada de `docs/PRIVACIDADE.md`; ver `PUBLICACAO.md`) |
 
 ## Descrição detalhada
 

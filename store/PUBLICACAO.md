@@ -4,10 +4,10 @@
 
 1. Conta Google e **conta de desenvolvedor da Chrome Web Store** — taxa única de US$ 5: <https://chrome.google.com/webstore/devconsole> → "Pagar taxa de registro".
 2. Verificar o e-mail de contato do desenvolvedor no painel (Conta → E-mail de contato → Verificar). Sem isso, não é possível publicar.
-3. **Política de privacidade em URL pública.** O arquivo está em `docs/PRIVACIDADE.md`. Opções:
-   - Ativar o **GitHub Pages** no repositório (Settings → Pages → Branch `main`, pasta `/docs`). A página fica em `https://hebertpaes.github.io/comenta-ai/` e a política em `https://hebertpaes.github.io/comenta-ai/PRIVACIDADE.md` *(se o repositório for privado, o Pages exige plano pago — nesse caso torne o repositório público ou hospede o texto em outro lugar)*.
-   - Ou usar o link direto do GitHub (só funciona com repositório público): `https://github.com/hebertpaes/comenta-ai/blob/main/docs/PRIVACIDADE.md`.
-   - Preencha o e-mail de contato no final de `docs/PRIVACIDADE.md` antes de publicar.
+3. **Política de privacidade em URL pública.** O texto está em `docs/PRIVACIDADE.md` (HTML gerado em `docs/privacidade.html`). Opções:
+   - **Recomendado:** publicar o site na VM Oracle em `https://comenta.com.br/privacidade.html` seguindo `deploy/README.md`.
+   - Ativar o **GitHub Pages** no repositório (Settings → Pages → Branch `main`, pasta `/docs`): `https://hebertpaes.github.io/comenta-ai/privacidade.html` *(repositório privado exige plano pago no Pages)*.
+   - Preencha o e-mail de contato no final de `docs/PRIVACIDADE.md` e rode `scripts/build-deploy.sh` para regerar o HTML antes de publicar.
 
 ## 1. Gerar o pacote
 
