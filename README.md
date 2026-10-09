@@ -23,14 +23,20 @@ Extensão para Google Chrome (Manifest V3) que adiciona uma barra lateral ao **W
 | 👁 **Modo privacidade** | Desfoca mensagens, lista de conversas e fotos (revela ao passar o mouse). Atalho `Alt+Shift+P`. |
 | ⚙️ **Configurações** | Privacidade, intervalos da transmissão, IA (chave, modelo, tom, descrição do negócio), webhook para integrações (n8n, Make, Zapier…), backup/restauração JSON. |
 
-## Instalação (modo desenvolvedor)
+## Instalação
 
-1. Baixe/clone este repositório.
+### Pelo arquivo .zip (sem clonar)
+
+1. Baixe `store/comenta-ai-v1.0.0.zip` (ou a [release](https://github.com/hebertpaes/comenta-ai/releases)) e descompacte em uma pasta.
 2. No Chrome, abra `chrome://extensions`, ative **Modo do desenvolvedor**.
-3. Clique em **Carregar sem compactação** e escolha a pasta `extension/`.
+3. Clique em **Carregar sem compactação** e escolha a pasta descompactada.
 4. Abra (ou recarregue) o <https://web.whatsapp.com>. A barra lateral roxa aparece à esquerda.
 
-Requer Chrome 111+ (ou Edge/Brave equivalentes).
+### Pelo código-fonte
+
+Clone o repositório e, no passo 3 acima, escolha a pasta `extension/`.
+
+Requer Chrome 111+ (ou Edge/Brave equivalentes). A publicação na Chrome Web Store está preparada em `store/` — veja `store/PUBLICACAO.md`.
 
 ### Assistente de IA
 
@@ -60,7 +66,19 @@ extension/
 └── options/                       # página de opções
 ```
 
+```
+store/        # pacote .zip, textos da listagem, capturas e tiles para a Chrome Web Store, guia de publicação
+docs/         # política de privacidade e página do projeto (GitHub Pages)
+scripts/      # package.sh — valida e gera o .zip
+```
+
 Sem etapa de build: é JavaScript puro. Para atualizar a biblioteca do WhatsApp, substitua `vendor/wppconnect-wa.js` pelo `dist/wppconnect-wa.js` de uma versão mais nova do pacote `@wppconnect/wa-js`.
+
+## Testes
+
+- `node --check` em todos os arquivos (feito por `scripts/package.sh`).
+- Teste de fumaça com Playwright em uma página que simula o WhatsApp Web com `chrome.*` e a ponte mockados (13 painéis + fluxos de CRM, `/atalho`, chatbot, agendamento, IA, privacidade e transmissão).
+- Teste com a extensão real carregada no Chromium: service worker, popup, opções e a página real do WhatsApp Web (tela de QR) — a wa-js 4.6.1 encontra todos os módulos do WhatsApp Web atual; o restante exige login por QR e deve ser validado manualmente.
 
 ## Variáveis e spintax
 

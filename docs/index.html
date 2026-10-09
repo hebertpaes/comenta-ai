@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Comenta AI – Superpoderes para o WhatsApp Web</title>
+    <style>
+      :root { color-scheme: light dark; --brand: #7c3aed; --bg: #f5f6f8; --fg: #111827; --card: #fff; --line: #e5e7eb; --muted: #6b7280; }
+      @media (prefers-color-scheme: dark) { :root { --bg: #171b1e; --fg: #e9edef; --card: #1f2428; --line: #313a40; --muted: #aebac1; } }
+      * { box-sizing: border-box; }
+      body { margin: 0; font-family: 'Segoe UI', Helvetica, Arial, sans-serif; background: var(--bg); color: var(--fg); line-height: 1.5; }
+      header { background: linear-gradient(135deg, #312e81, #581c87); color: #fff; padding: 48px 16px; text-align: center; }
+      header h1 { margin: 0 0 8px; font-size: 36px; }
+      header p { margin: 0 auto; max-width: 640px; opacity: 0.9; }
+      main { max-width: 900px; margin: 0 auto; padding: 32px 16px 64px; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 24px 0; }
+      .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+      .card h3 { margin: 0 0 6px; font-size: 16px; }
+      .card p { margin: 0; color: var(--muted); font-size: 14px; }
+      .btn { display: inline-block; background: var(--brand); color: #fff; text-decoration: none; padding: 12px 20px; border-radius: 10px; font-weight: 600; margin: 8px 8px 0 0; }
+      .btn.secondary { background: transparent; border: 1px solid var(--line); color: var(--fg); }
+      footer { text-align: center; color: var(--muted); font-size: 13px; padding: 24px 16px; }
+      ol li { margin-bottom: 6px; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Comenta AI</h1>
+      <p>Superpoderes para o WhatsApp Web: CRM Kanban, transmissões, agendamentos, respostas rápidas, funis, chatbot, assistente de IA e modo privacidade — tudo no seu navegador.</p>
+      <a class="btn" href="https://github.com/hebertpaes/comenta-ai">Ver no GitHub</a>
+      <a class="btn secondary" href="PRIVACIDADE.md">Política de privacidade</a>
+    </header>
+    <main>
+      <h2>Recursos</h2>
+      <div class="grid">
+        <div class="card"><h3>🗂 CRM Kanban</h3><p>Organize conversas em colunas com arrastar-e-soltar, anotações e envio em lote.</p></div>
+        <div class="card"><h3>📣 Transmissão em massa</h3><p>Listas de contatos, variáveis, intervalos aleatórios, limite diário e relatório.</p></div>
+        <div class="card"><h3>📅 Agendamentos</h3><p>Mensagens e funis agendados, com repetição diária, semanal ou mensal.</p></div>
+        <div class="card"><h3>⚡ Respostas rápidas</h3><p>Atalhos /comando direto na caixa de mensagem do WhatsApp.</p></div>
+        <div class="card"><h3>🤖 Chatbot</h3><p>Respostas automáticas por palavra-chave, boas-vindas, fora do expediente e IA.</p></div>
+        <div class="card"><h3>✨ Assistente de IA</h3><p>Resuma conversas, sugira respostas e melhore textos com Claude usando a sua chave.</p></div>
+        <div class="card"><h3>👁 Modo privacidade</h3><p>Desfoque mensagens, lista e fotos para atender em público. Alt+Shift+P.</p></div>
+        <div class="card"><h3>🔒 Seus dados, no seu navegador</h3><p>Nada passa por servidores da extensão. Backup e restauração em JSON.</p></div>
+      </div>
+      <h2>Instalação</h2>
+      <ol>
+        <li>Instale pela Chrome Web Store (em breve) ou baixe o <code>.zip</code> na página de <a href="https://github.com/hebertpaes/comenta-ai/releases">releases</a>.</li>
+        <li>Para instalar manualmente: descompacte, abra <code>chrome://extensions</code>, ative o Modo do desenvolvedor e clique em “Carregar sem compactação”.</li>
+        <li>Abra o <a href="https://web.whatsapp.com">WhatsApp Web</a> — a barra lateral aparece à esquerda.</li>
+      </ol>
+      <h2>Aviso</h2>
+      <p>Comenta AI é um projeto independente e não é afiliado ao WhatsApp ou à Meta Platforms. Use com responsabilidade: envios em massa não solicitados violam os termos do WhatsApp.</p>
+    </main>
+    <footer>Comenta AI · Código aberto (MIT) · <a href="PRIVACIDADE.md">Privacidade</a></footer>
+  </body>
+</html>

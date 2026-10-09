@@ -291,8 +291,10 @@
   });
 
   // ---------- eventos ----------
+  // "ready" só quando a sessão está autenticada; na tela de QR emitimos "waiting_auth".
   const onReady = async () => {
-    emit('ready', await methods.status());
+    const st = await methods.status();
+    emit(st.authenticated ? 'ready' : 'waiting_auth', st);
   };
   WPP.loader.onReady(onReady);
   if (WPP.isReady) onReady();

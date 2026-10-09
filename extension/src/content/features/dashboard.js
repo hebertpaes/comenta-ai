@@ -40,8 +40,16 @@
             h(
               'div',
               { class: 'grow' },
-              h('b', null, CMT.state.ready ? 'Conectado ao WhatsApp Web' : 'Aguardando o WhatsApp carregar...'),
-              h('div', { class: 'muted' }, status && status.me ? `Sua conta: +${status.me.split('@')[0]}` : 'Faça login no WhatsApp Web para ativar os recursos.')
+              h('b', null, CMT.state.ready ? 'Conectado ao WhatsApp Web' : status && status.ready && !status.authenticated ? 'Aguardando login no WhatsApp' : 'Aguardando o WhatsApp carregar...'),
+              h(
+                'div',
+                { class: 'muted' },
+                CMT.state.ready && status && status.me
+                  ? `Sua conta: +${status.me.split('@')[0]}`
+                  : status && status.ready && !status.authenticated
+                  ? 'Escaneie o QR code (ou entre com o número) para ativar os recursos.'
+                  : 'Os recursos são ativados assim que o WhatsApp Web terminar de carregar.'
+              )
             ),
             UI.btn(
               'Atualizar',

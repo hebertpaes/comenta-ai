@@ -61,14 +61,20 @@ function notify({ title, message, chatId }) {
   chrome.notifications.create(id, { type: 'basic', iconUrl: chrome.runtime.getURL('icons/icon128.png'), title: title || 'Comenta AI', message: message || '', priority: 2 });
 }
 
+/** Aba do WhatsApp Web mais provável de estar em uso (ativa ou acessada por último). */
+async function bestWaTab() {
+  const tabs = await chrome.tabs.query({ url: WA_URL });
+  return tabs.sort((a, b) => (b.active === true) - (a.active === true) || (b.lastAccessed || 0) - (a.lastAccessed || 0))[0] || null;
+}
+
 chrome.notifications.onClicked.addListener(async (id) => {
   chrome.notifications.clear(id);
-  const tabs = await chrome.tabs.query({ url: WA_URL });
-  if (!tabs.length) return chrome.tabs.create({ url: 'https://web.whatsapp.com/' });
-  await chrome.tabs.update(tabs[0].id, { active: true });
-  await chrome.windows.update(tabs[0].windowId, { focused: true });
+  const tab = await bestWaTab();
+  if (!tab) return chrome.tabs.create({ url: 'https://web.whatsapp.com/' });
+  await chrome.tabs.update(tab.id, { active: true });
+  await chrome.windows.update(tab.windowId, { focused: true });
   const chatId = notifyChats.get(id);
-  if (chatId) chrome.tabs.sendMessage(tabs[0].id, { type: 'cmt:open-chat', chatId }).catch(() => {});
+  if (chatId) chrome.tabs.sendMessage(tab.id, { type: 'cmt:open-chat', chatId }).catch(() => {});
   notifyChats.delete(id);
 });
 
@@ -96,10 +102,10 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     return;
   }
   if (msg.type === 'cmt:open-whatsapp') {
-    chrome.tabs.query({ url: WA_URL }).then(async (tabs) => {
-      if (tabs.length) {
-        await chrome.tabs.update(tabs[0].id, { active: true });
-        await chrome.windows.update(tabs[0].windowId, { focused: true });
+    bestWaTab().then(async (tab) => {
+      if (tab) {
+        await chrome.tabs.update(tab.id, { active: true });
+        await chrome.windows.update(tab.windowId, { focused: true });
       } else await chrome.tabs.create({ url: 'https://web.whatsapp.com/' });
       sendResponse({ ok: true });
     });
