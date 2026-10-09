@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <title>Comenta AI</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <img src="../icons/icon48.png" alt="" width="36" height="36" />
+      <div>
+        <h1>Comenta AI</h1>
+        <p id="status">Verificando…</p>
+      </div>
+    </header>
+
+    <section id="closed" hidden>
+      <p>O WhatsApp Web não está aberto.</p>
+      <button id="openWa" class="primary">Abrir WhatsApp Web</button>
+    </section>
+
+    <section id="open" hidden>
+      <div class="stats">
+        <div><b id="sUnread">0</b><span>não lidas</span></div>
+        <div><b id="sSent">0</b><span>enviadas</span></div>
+        <div><b id="sAuto">0</b><span>automáticas</span></div>
+      </div>
+      <div class="grid" id="panels"></div>
+      <button id="privacy" class="ghost">👁 Alternar modo privacidade</button>
+    </section>
+
+    <footer>
+      <button id="options" class="link">Configurações</button>
+      <span id="version"></span>
+    </footer>
+    <script src="popup.js"></script>
+  </body>
+</html>

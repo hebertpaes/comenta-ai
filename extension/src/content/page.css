@@ -1,0 +1,41 @@
+/* Estilos aplicados na própria página do WhatsApp (fora do Shadow DOM). */
+
+/* Abre espaço para a barra lateral da extensão. */
+html.cmt-on body {
+  margin-left: 60px !important;
+  width: calc(100% - 60px) !important;
+  position: relative !important;
+  overflow: hidden;
+}
+html.cmt-on #app,
+html.cmt-on #app > div {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* ---------- Modo privacidade ---------- */
+html.cmt-blur-msgs #main .message-in,
+html.cmt-blur-msgs #main .message-out,
+html.cmt-blur-msgs #main [data-id] [data-pre-plain-text],
+html.cmt-blur-list #pane-side [role='listitem'] span[title],
+html.cmt-blur-list #pane-side [role='gridcell'] span[title],
+html.cmt-blur-list #pane-side [role='row'] span[title],
+html.cmt-blur-list #main header span[title],
+html.cmt-blur-photos #pane-side img,
+html.cmt-blur-photos #main header img,
+html.cmt-blur-photos #main .message-in img,
+html.cmt-blur-photos #main .message-out img {
+  filter: blur(7px) !important;
+  transition: filter 0.15s ease;
+}
+html.cmt-reveal.cmt-blur-msgs #main .message-in:hover,
+html.cmt-reveal.cmt-blur-msgs #main .message-out:hover,
+html.cmt-reveal.cmt-blur-list #pane-side [role='listitem']:hover span[title],
+html.cmt-reveal.cmt-blur-list #pane-side [role='row']:hover span[title],
+html.cmt-reveal.cmt-blur-list #main header:hover span[title],
+html.cmt-reveal.cmt-blur-photos #pane-side [role='listitem']:hover img,
+html.cmt-reveal.cmt-blur-photos #pane-side [role='row']:hover img,
+html.cmt-reveal.cmt-blur-photos #main header:hover img,
+html.cmt-reveal.cmt-blur-photos #main img:hover {
+  filter: none !important;
+}

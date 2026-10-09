@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Política de Privacidade – Comenta AI</title><style>
+:root{color-scheme:light dark;--bg:#f5f6f8;--fg:#111827;--card:#fff;--line:#e5e7eb;--muted:#6b7280;--brand:#7c3aed}
+@media(prefers-color-scheme:dark){:root{--bg:#171b1e;--fg:#e9edef;--card:#1f2428;--line:#313a40;--muted:#aebac1}}
+*{box-sizing:border-box}body{margin:0;font-family:'Segoe UI',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6}
+header{background:linear-gradient(135deg,#312e81,#581c87);color:#fff;padding:32px 16px;text-align:center}header a{color:#c7d2fe}
+main{max-width:820px;margin:0 auto;padding:24px 16px 64px;background:var(--card)}
+h1{font-size:28px}h2{margin-top:32px;border-bottom:1px solid var(--line);padding-bottom:6px}
+table{border-collapse:collapse;width:100%;font-size:14px}th,td{border:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
+code{background:var(--bg);padding:2px 5px;border-radius:4px;font-size:90%}a{color:var(--brand)}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
+</style></head>
+<body><header><strong>Comenta AI</strong> · <a href="/">início</a></header>
+<main><h1>Política de Privacidade – Comenta AI</h1>
+<p><strong>Última atualização:</strong> 9 de outubro de 2026</p>
+<p>O <strong>Comenta AI</strong> é uma extensão para o navegador Google Chrome que adiciona ferramentas de produtividade ao WhatsApp Web (CRM, transmissões, agendamentos, respostas rápidas, chatbot, assistente de IA, lembretes, modo privacidade). Esta política explica quais dados a extensão trata e como.</p>
+<h2>Resumo</h2>
+<ul><li><strong>Não coletamos, não armazenamos em servidores e não vendemos dados.</strong> O desenvolvedor da extensão não recebe nenhuma informação sua.</li><li>Todos os dados ficam <strong>no seu navegador</strong>, no armazenamento local da extensão (<code>chrome.storage.local</code>).</li><li>Conteúdo de conversas só sai do seu computador <strong>quando você usa um recurso que exige isso</strong> — o assistente de IA (enviado diretamente à API da Anthropic com a <strong>sua</strong> chave) ou um webhook que <strong>você</strong> configurou.</li></ul>
+<h2>Dados tratados localmente</h2>
+<p>A extensão guarda no seu navegador, exclusivamente para o funcionamento dos recursos:</p>
+<ul><li>Configurações e preferências;</li><li>Respostas rápidas, funis, gatilhos do chatbot, lembretes, abas e notas que você cria;</li><li>Cards do CRM (nome e número do contato, coluna, datas) e notas por conversa;</li><li>Agendamentos e seus anexos (arquivos escolhidos por você, armazenados em formato base64);</li><li>Relatórios de transmissões (nome/número do destinatário e status do envio);</li><li>Estatísticas de uso (contadores de mensagens enviadas por dia);</li><li>Sua chave de API da Anthropic e a URL de webhook, se você as informar.</li></ul>
+<p>Esses dados <strong>nunca</strong> são transmitidos ao desenvolvedor. Você pode exportá-los (Configurações › Backup) ou apagá-los a qualquer momento (Configurações › Backup › Apagar todos os dados, ou removendo a extensão).</p>
+<h2>Dados enviados a terceiros (somente por sua ação)</h2>
+<h3>Anthropic (assistente de IA)</h3>
+<p>Quando você usa o assistente de IA (resumir conversa, sugerir resposta, reescrever texto, criar mensagem) ou ativa um gatilho de chatbot do tipo "resposta por IA", a extensão envia <strong>diretamente do seu navegador para <code>https://api.anthropic.com</code></strong>:</p>
+<ul><li>o texto necessário para a tarefa (por exemplo, as últimas mensagens da conversa aberta ou o texto que você digitou);</li><li>a descrição do seu negócio e o tom de voz que você configurou;</li><li>a sua chave de API, no cabeçalho de autenticação.</li></ul>
+<p>O uso é faturado na sua conta Anthropic e regido pelos <a href="https://www.anthropic.com/legal/consumer-terms">termos</a> e pela <a href="https://www.anthropic.com/legal/privacy">política de privacidade</a> da Anthropic. O desenvolvedor da extensão não tem acesso a esses dados nem à sua chave. Se você não configurar uma chave, nada é enviado.</p>
+<h3>Webhook (opcional)</h3>
+<p>Se você informar uma URL de webhook em Configurações › Webhook, a extensão enviará requisições HTTP <code>POST</code> <strong>para a URL que você escolheu</strong> com os eventos que você ativar (mensagem recebida, mensagem enviada pela extensão, transmissão concluída). O conteúdo pode incluir texto de mensagens e números de telefone. Você é responsável pelo destino configurado. Por padrão, nenhum webhook está ativo.</p>
+<h3>WhatsApp</h3>
+<p>A extensão funciona dentro do WhatsApp Web (<code>https://web.whatsapp.com</code>) e usa a sessão já autenticada no seu navegador para ler conversas e enviar mensagens <strong>em seu nome, quando você aciona um recurso</strong> (envio, transmissão, agendamento, resposta automática). Nenhum dado é enviado a servidores da extensão. O WhatsApp é um serviço da Meta Platforms, com termos e políticas próprios.</p>
+<h2>Permissões solicitadas</h2>
+<table><thead><tr><th>Permissão</th><th>Para quê</th></tr></thead><tbody><tr><td><code>storage</code>, <code>unlimitedStorage</code></td><td>Guardar suas configurações, CRM, funis, agendamentos e anexos no navegador.</td></tr><tr><td><code>notifications</code></td><td>Exibir lembretes no horário programado.</td></tr><tr><td>Acesso a <code>web.whatsapp.com</code></td><td>Exibir a barra lateral e integrar-se ao WhatsApp Web.</td></tr><tr><td>Acesso a <code>api.anthropic.com</code></td><td>Chamar a API de IA com a sua chave, quando você usar o assistente.</td></tr></tbody></table>
+<p>A extensão não contém código remoto: todo o código é empacotado e revisado pela Chrome Web Store.</p>
+<h2>Uso limitado</h2>
+<p>O uso de dados do usuário pela extensão segue a <a href="https://developer.chrome.com/docs/webstore/program-policies/user-data-faq">Política de Dados do Usuário da Chrome Web Store</a>, incluindo os requisitos de uso limitado: os dados são usados apenas para fornecer os recursos descritos, não são vendidos, não são usados para publicidade nem para avaliação de crédito, e não são transferidos a terceiros exceto conforme descrito acima (por sua ação).</p>
+<h2>Segurança</h2>
+<p>Os dados ficam no perfil do seu navegador e estão protegidos pelas proteções do próprio Chrome. A chave de API é armazenada localmente e enviada apenas para <code>api.anthropic.com</code> por HTTPS. Recomendamos criar uma chave exclusiva para a extensão e revogá-la em caso de suspeita de uso indevido.</p>
+<h2>Responsabilidade de uso</h2>
+<p>Envios em massa e respostas automáticas devem respeitar os Termos de Serviço do WhatsApp e a legislação aplicável (incluindo a LGPD). Envie mensagens apenas a contatos que consentiram em recebê-las.</p>
+<h2>Crianças</h2>
+<p>A extensão não se destina a menores de 13 anos e não coleta intencionalmente dados de crianças.</p>
+<h2>Alterações</h2>
+<p>Esta política pode ser atualizada. A versão vigente é sempre publicada neste endereço, com a data de atualização.</p>
+<h2>Contato</h2>
+<p>Dúvidas sobre privacidade: abra uma <em>issue</em> em <a href="https://github.com/hebertpaes/comenta-ai/issues">https://github.com/hebertpaes/comenta-ai/issues</a> ou escreva para <strong>[preencha seu e-mail de contato]</strong>.</p></main>
+<footer>Comenta AI · projeto independente, não afiliado ao WhatsApp/Meta</footer></body></html>
